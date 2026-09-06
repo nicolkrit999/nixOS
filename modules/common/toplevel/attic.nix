@@ -40,7 +40,11 @@ let
       ];
 
       nix.settings = {
-        extra-substituters = [ "${cfg.serverUrl}/${cfg.cacheName}?priority=10&connect-timeout=5" ];
+        # NOTE: only store-level params (priority, want-mass-query, trusted) are
+        # valid here. `connect-timeout` is a global nix.conf setting, not a store
+        # param - passing it in the URL makes every nix invocation print
+        # "warning: unknown setting 'connect-timeout'" and has no effect.
+        extra-substituters = [ "${cfg.serverUrl}/${cfg.cacheName}?priority=10" ];
         extra-trusted-public-keys = [ cfg.publicKey ];
       } // lib.optionalAttrs hasAuthToken {
         netrc-file = config.sops.templates."attic-netrc".path;

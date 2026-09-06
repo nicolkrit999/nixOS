@@ -4,3 +4,4 @@
 - [laptop audio killed by kernel 7.2.0](project_laptop_audio_kernel_72_regression.md) - cs35l56 spk-id-gpios EBUSY since 7.1.8->7.2.0 (gen 307->308); also: GRUB configurationLimit hides still-bootable older profiles
 - [wallpapers targetMonitor must be literal](project_wallpapers_targetmonitor_literal.md) - mango bakes targetMonitor into flat key=value mango-config.conf; any `=` breaks its parser, and the list can't be split per-consumer
 - [flake check misses build-phase failures](project_flake_check_misses_build_failures.md) - check/--dry-run only evaluate; config-validator errors need a real `nix build`
+- [journal clock skew on nixos-desktop](project_journal_clock_skew_desktop.md) - RTC +2h jump makes journalctl --since/--until return nothing; dump once and correlate by line number

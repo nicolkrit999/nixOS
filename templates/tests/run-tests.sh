@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run-tests.sh — run all NixOS and Darwin tests locally.
+# run-tests.sh - run all NixOS and Darwin tests locally.
 # Run from anywhere; the script resolves the repo root automatically.
 #
 # Usage:
@@ -7,7 +7,7 @@
 #
 #   --parallel   run all tests concurrently instead of sequentially (faster,
 #                but if nicol-nas is offline, parallel nix processes will each
-#                print "could not resolve nicol-nas" retry warnings — harmless,
+#                print "could not resolve nicol-nas" retry warnings - harmless,
 #                but noisy; prefer sequential when the NAS is unreachable)
 #   --fast       pass --fast to arch-compat, skipping specialisation batches
 
@@ -28,13 +28,21 @@ done
 #  Format:  "Display label | command"
 #  Commands are run from the repo root.
 # ══════════════════════════════════════════════════════════════════════════════
+# The nix-tests harness is an external flake whose own nixpkgs pin is older than
+# the nixpkgs fix for crates.io's User-Agent block: crates.io now returns HTTP 403
+# for curl-like UAs on `https://crates.io/api/v1/crates/<c>/<v>/download`, which is
+# the URL that older `importCargoLock` used. Current nixpkgs fetches crates from
+# `https://static.crates.io/crates` instead, so we force nix-tests to build against
+# *our* locked nixpkgs. Without this, building the harness fails before any test runs.
+NIX_TESTS="nix run github:danielefongo/nix-tests --inputs-from . --override-input nixpkgs nixpkgs --"
+
 TESTS=(
   "NixOS  · minimal-defaults      | bash templates/tests/nixos/test-minimal-defaults/check-nixos-minimal-defaults.sh"
   "NixOS  · spec-contract         | bash templates/tests/nixos/test-spec-contract/check-nixos-spec-contract.sh"
-  "NixOS  · conflicting-modules   | nix run github:danielefongo/nix-tests -- templates/tests/nixos/conflicting-modules"
-  "NixOS  · custom-shells         | nix run github:danielefongo/nix-tests -- templates/tests/nixos/test-custom-shells"
+  "NixOS  · conflicting-modules   | $NIX_TESTS templates/tests/nixos/conflicting-modules"
+  "NixOS  · custom-shells         | $NIX_TESTS templates/tests/nixos/test-custom-shells"
   "NixOS  · arch-compat (aarch64) | bash templates/tests/nixos/test-arch-compat/check-nixos-aarch64-compat.sh${FAST:+ $FAST}"
-  "NixOS  · wallpapers            | nix run github:danielefongo/nix-tests -- templates/tests/nixos/test-nixos-wallpapers"
+  "NixOS  · wallpapers            | $NIX_TESTS templates/tests/nixos/test-nixos-wallpapers"
   "Darwin · minimal-defaults      | bash templates/tests/darwin/test-minimal-defaults/check-darwin-minimal-defaults.sh"
 )
 # ══════════════════════════════════════════════════════════════════════════════

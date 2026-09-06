@@ -124,12 +124,12 @@ jobs:
       - name: "Test: conflicting-modules"
         id: conflicting-modules
         continue-on-error: true
-        run: nix run github:danielefongo/nix-tests -- templates/tests/nixos/conflicting-modules
+        run: nix run github:danielefongo/nix-tests --inputs-from . --override-input nixpkgs nixpkgs -- templates/tests/nixos/conflicting-modules
 
       - name: "Test: custom-shells"
         id: custom-shells
         continue-on-error: true
-        run: nix run github:danielefongo/nix-tests -- templates/tests/nixos/test-custom-shells
+        run: nix run github:danielefongo/nix-tests --inputs-from . --override-input nixpkgs nixpkgs -- templates/tests/nixos/test-custom-shells
 
       - name: "Test: arch-compat (aarch64)"
         id: arch-compat
@@ -139,7 +139,7 @@ jobs:
       - name: "Test: wallpapers"
         id: wallpapers
         continue-on-error: true
-        run: nix run github:danielefongo/nix-tests -- templates/tests/nixos/test-nixos-wallpapers
+        run: nix run github:danielefongo/nix-tests --inputs-from . --override-input nixpkgs nixpkgs -- templates/tests/nixos/test-nixos-wallpapers
 
       - name: Summary and notify on failure
         # always() && WEBHOOK_ID: on a fork without secrets the webhook URL is

@@ -25,7 +25,7 @@ let
     (src + "/modules/common/themes/catppuccin.nix")
     (src + "/modules/nixos/toplevel/common-configuration-nixos.nix")
 
-    # WM enable options — specs reference myconfig.programs.*.enable on all of these
+    # WM enable options - specs reference myconfig.programs.*.enable on all of these
     (src + "/modules/nixos/toplevel/hyprland.nix")
     (src + "/modules/nixos/toplevel/niri.nix")
     (src + "/modules/nixos/toplevel/mango.nix")
@@ -36,6 +36,9 @@ let
     # Hyprland DE modules (needed for monitors/execOnce/windowRules options)
     (src + "/modules/nixos/programs/de-wm/hyprland/hyprland-main.nix")
     (src + "/modules/nixos/programs/de-wm/hyprland/hyprland-binds.nix")
+
+    # Waybar (home spec forces waybar-hyprland.waybarWorkspaceIcons)
+    (src + "/modules/nixos/programs/waybar/hyprland/waybar-hyprland.nix")
 
     # Niri DE modules (school/home specs reference niri.execOnce, niri.outputs)
     (src + "/modules/nixos/programs/de-wm/niri/niri-main.nix")

@@ -1,0 +1,2 @@
+- [fetchurl SSL line is noise](guide_fetchurl_ssl_line_is_noise.md) - the "unable to get local issuer certificate" line in FOD logs is benign; curl exit 22 = HTTP error, read the status code instead
+- [spec-contract module list drift](guide_spec_contract_module_list_drift.md) - "option does not exist" from spec-contract means its hand-written nixosPaths drifted, not an untracked file
