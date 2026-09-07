@@ -6,6 +6,7 @@ let
   sharedPackages = (with pkgs; [
     arping # ARP broadcast utility (may need sudo/capabilities for raw-socket access to actually send ARP requests)
     bandwhich # CLI utility for displaying current network utilization
+    dig # Domain name server
     #evebox # Web Based Event Viewer (GUI) for Suricata EVE Events in Elastic Search (compatible with darwin but currently broken) FIXME
     iperf3 # Tool to measure IP bandwidth using UDP or TCP
     jq # Lightweight and flexible command-line JSON processor
